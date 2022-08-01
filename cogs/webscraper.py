@@ -4,7 +4,6 @@ import requests
 import os
 
 headers = {'User-Agent' : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}
-weatherKey = '5f4122dd0781f01478344379b50ee902'
 
 class Webscraper(commands.Cog): 
     def __init__(self, client):
@@ -12,7 +11,7 @@ class Webscraper(commands.Cog):
 
     @commands.command(help = " - _weather {unit} {city} #unit = imperial, metric, or standard")
     async def weather(self, ctx, units, *, city):
-      url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={weatherKey}&units={units}"
+      url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={os.environ['weather_key']}&units={units}"
       await ctx.send(f"{url}")
       r = requests.get(url, headers = headers)
       data = r.json()
