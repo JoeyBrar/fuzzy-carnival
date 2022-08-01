@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import datetime
 import pytz
 import requests
@@ -27,27 +27,35 @@ def getPrices():
 class ethereum_moniter(commands.Cog): 
     def __init__(self, client):
         self.client = client
+        self.liveMoniter.start()
 
-    @commands.command(help = ' - start live ethereum moniter')
-    async def liveMoniter(self, ctx, password):
+    def cog_unload(self):
+        self.liveMoniter.cancel()
+
+    # @commands.command()
+    @tasks.loop(seconds=300)
+    async def liveMoniter(self):
       stop = False
-      if password == '32233223p':
-        while stop != True:
-          try:
-            price, date, dateFormat, timeFormat = getPrices()
-            await ctx.send(f'__**ETH**__: **{price}** as of {dateFormat}, {timeFormat} (US/Eastern time)')
-            await ctx.send(f'NOTE: Graphing will be added later, as soon as I make sure this doesn\'t use up too much recources.')
-            await ctx.send(f"""```fix\nTimestamp: {date}```""")
+      while stop != True:
+        try:
+          
+          ethMoniter = self.client.get_channel(1002742610160517130)
+          price, date, dateFormat, timeFormat = getPrices()
+          await ethMoniter.send(f'__**ETH**__: **{price}** as of {dateFormat}, {timeFormat} (US/Eastern time)')
+          await ethMoniter.send(f'NOTE: Graphing will be added later, as soon as I make sure this doesn\'t use up too much recources.')
+          await ethMoniter.send(f"""```fix\nTimestamp: {date}```""")
+          stop = True
+          
+        except Exception as e:
+          await ethMoniter.send(f'ERROR: {e}')
+          print(e)
+          stop = True
+    
+    @liveMoniter.before_loop
+    async def beforeMoniter(self):
+        print('Waiting for bot...')
+        await self.client.wait_until_ready()
 
-            time.sleep(3600)
-            
-          except Exception as e:
-            await ctx.send(f'ERROR: {e}')
-            print(e)
-            stop = True
-        
-      else:
-        await ctx.send('wrong password')
 
 def setup(client): 
     client.add_cog(ethereum_moniter(client))
