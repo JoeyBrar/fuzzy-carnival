@@ -4,7 +4,8 @@ import datetime
 import pytz
 import requests
 from bs4 import BeautifulSoup
-import time
+import pandas
+import matplotlib.pyplot as plt
 
 headers = {'User-Agent' : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}
 
@@ -23,37 +24,90 @@ def getPrices():
   
   date, dateFormat, timeFormat = timeStamp()
   return price, date, dateFormat, timeFormat
+
+def getData(id, currency, days, interval):
+  cryptoids = check()
+
+  if id in cryptoids:
+    url = f'http://api.coingecko.com/api/v3/coins/{id}/market_chart'
+    payload = {'vs_currency' : currency, 'days' : days, 'inverval' : interval}
+    r = requests.get(url, params = payload, headers = headers)
+    data = r.json()
+
+    prices = []
+    timestamps = []
+
+    for i in data['prices']:
+      prices.append(i[1])
+      timestamps.append(datetime.datetime.fromtimestamp(i[0]/1000))
+
+    rawData = {
+      'Date' : timestamps,
+      'Price' : prices
+    }
+
+    df = pandas.DataFrame(rawData)
+    return df
+
+  else: 
+    print('crypto does not exist.')
+    return 1
+
+def plotGraph(days=1, interval='hourly', color='#00E7FF'):
+  ethInfo = getData('ethereum', 'usd', days, interval)
+  ethInfo.plot(x='Date', y='Price', color=color)
+  plt.ylabel('Price')
+  plt.title('i\'ll name this later')
+  plt.savefig(r'ethPlot.png')
+
+def check():
+    url = f'https://api.coingecko.com/api/v3/coins'
+    r = requests.get(url, headers = headers)
+    data = r.json()
+    cryptoids = []
+
+    for i in data:
+        cryptoids.append(i['id'])
+
+    return cryptoids 
   
 class ethereum_moniter(commands.Cog): 
     def __init__(self, client):
         self.client = client
         self.liveMoniter.start()
+        self.count = 0
 
     def cog_unload(self):
         self.liveMoniter.cancel()
 
     # @commands.command()
-    @tasks.loop(seconds=300)
+    @tasks.loop(seconds=120)
     async def liveMoniter(self):
-      stop = False
-      while stop != True:
-        try:
-          
-          ethMoniter = self.client.get_channel(1002742610160517130)
-          price, date, dateFormat, timeFormat = getPrices()
-          await ethMoniter.send(f'__**ETH**__: **{price}** as of {dateFormat}, {timeFormat} (US/Eastern time)')
-          await ethMoniter.send(f'NOTE: Graphing will be added later, as soon as I make sure this doesn\'t use up too much recources.')
-          await ethMoniter.send(f"""```fix\nTimestamp: {date}```""")
-          stop = True
-          
-        except Exception as e:
-          await ethMoniter.send(f'ERROR: {e}')
-          print(e)
-          stop = True
+      ethMoniter = self.client.get_channel(1002742610160517130)
+
+      try:
+        plotGraph()
+
+        price, date, dateFormat, timeFormat = getPrices()
+        timestamp = f"""```fix\nTimestamp: {date}```"""
     
+        if self.count%3 == 0 or self.count == 0:
+          await ethMoniter.send(f"__**ETH**__: **{price}** as of {dateFormat}, {timeFormat} (US/Eastern time)", file=discord.File("ethPlot.png"))
+          await ethMoniter.send(timestamp)
+        else:
+          await ethMoniter.send(f"__**ETH**__: **{price}** as of {dateFormat}, {timeFormat} (US/Eastern time)\nNOTE: add a note later\n{timestamp}")
+
+        self.count += 1
+
+      except Exception as e:
+        await ethMoniter.send(f'ERROR: {e}')
+        print(e)
+
+      
+ 
     @liveMoniter.before_loop
     async def beforeMoniter(self):
-        print('Waiting for bot...')
+        print('Waiting for bot...') 
         await self.client.wait_until_ready()
 
 
