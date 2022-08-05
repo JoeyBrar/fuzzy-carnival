@@ -15,6 +15,7 @@ charset-normalizer==2.1.0
 cycler==0.11.0
 DateTime==4.5
 discord==1.7.3
+discord-ui==5.1.6
 discord.py==1.7.3
 fonttools==4.34.4
 idna==3.3
