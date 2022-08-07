@@ -58,7 +58,6 @@ def getData(id, currency, days, interval):
     }
 
     df = pandas.DataFrame(rawData)
-    print(df)
     return df
 
   else: 
@@ -93,8 +92,7 @@ def price_check():
   global nextday
   price, date, dateFormat, timeFormat = getPrices()
   money = float(price[1:].replace(",", ""))
-  nextday = nextday - 86400
-  if abs(time.time() - nextday) <= 12600:
+  if abs(time.time() - nextday) <= 240:
     open_price = money
     nextday += 86400
     difference = money - open_price
