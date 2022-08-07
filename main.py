@@ -66,10 +66,6 @@ async def massDeleteRoleA(ctx):
     elif roles[i].name == 'children':
       await roles[i].delete()
       await ctx.send(f'{roles[i]} deleted')
-
-@client.command()
-async def owner_stats(ctx):
-  await ctx.send("The owner's (YEET#5381) dick is 14 inches long \nNote: this stat sheet is incomplete")
   # end of usesless stuff------------------------------------------------------------------------    
 
   
