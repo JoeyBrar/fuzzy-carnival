@@ -14,9 +14,6 @@ chardet==4.0.0
 charset-normalizer==2.1.0
 cycler==0.11.0
 DateTime==4.5
-discord==1.7.3
-discord-ui==5.1.6
-discord.py==1.7.3
 fonttools==4.34.4
 idna==3.3
 kiwisolver==1.4.4
@@ -29,6 +26,7 @@ pandas==1.4.3
 Pillow==9.2.0
 praw==7.6.0
 prawcore==2.3.0
+py-cord==2.0.0
 pyparsing==3.0.9
 python-dateutil==2.8.2
 pytz==2022.1
