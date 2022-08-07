@@ -69,7 +69,7 @@ async def massDeleteRoleA(ctx):
 
 @client.command()
 async def owner_stats(ctx):
-  await ctx.send("The owner's (an ikea table#1892) dick is 14 inches long \nNote: this stat sheet is incomplete")
+  await ctx.send("The owner's (YEET#5381) dick is 14 inches long \nNote: this stat sheet is incomplete")
   # end of usesless stuff------------------------------------------------------------------------    
 
   
