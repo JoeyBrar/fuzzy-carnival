@@ -134,6 +134,7 @@ class eth_button(discord.ui.View):
      async def on_timeout(self):
          for child in self.children:
              child.disabled = True
+             plt.pyplot.close(all)
          await self.message.edit(view = self)
 
      @discord.ui.button(label = "1 day", style = discord.ButtonStyle.gray)
