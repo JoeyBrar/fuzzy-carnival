@@ -115,9 +115,9 @@ def gembed(days):
   price, date, dateFormat, timeFormat = getPrices()
   timestamp = f"Timestamp: {date}"
   if not price_check()[0]:
-    embed = discord.Embed(title = f"Ethereum **{price}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern time)", color = 0xcdb0f9)
+    embed = discord.Embed(title = f"Ethereum **{price}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
   elif price_check()[1]:
-    embed = discord.Embed(title = f"Ethereum **{price}, {price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time)", color = 0xcdb0f9)
+    embed = discord.Embed(title = f"Ethereum **{price}, {price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
   else:
     embed = discord.Embed(title = f"Ethereum **{price}, +{price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time)", color = 0xcdb0f9)
   if days > 2 and days != 9999:
@@ -197,11 +197,11 @@ class ethereum_moniter(commands.Cog):
             
         timestamp = f"Timestamp: {date}"
         if not price_check()[0]:
-          embed = discord.Embed(title = f"Ethereum **{price}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern time)", color = 0xcdb0f9)
+          embed = discord.Embed(title = f"Ethereum **{price}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
         elif price_check()[1]:
-          embed = discord.Embed(title = f"Ethereum **{price}, {price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time)", color = 0xcdb0f9)
+          embed = discord.Embed(title = f"Ethereum **{price}, {price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
         else:
-          embed = discord.Embed(title = f"Ethereum **{price}, +{price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time)", color = 0xcdb0f9)
+          embed = discord.Embed(title = f"Ethereum **{price}, +{price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
         
         if self.count % 3 == 0 or self.count == 0:
             plotGraph()
