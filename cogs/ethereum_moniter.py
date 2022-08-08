@@ -166,7 +166,7 @@ class eth_button(discord.ui.View):
 
      @discord.ui.button(label="All time", style=discord.ButtonStyle.gray)
      async def button_press8(self, button, interaction):
-         await interaction.response.edit_message(embed = gembed(9999)[0], file = gembed("max")[1])
+         await interaction.response.edit_message(embed = gembed(9999)[0], file = gembed(9999)[1])
 
      @discord.ui.button(label = "Kill embed", style=discord.ButtonStyle.danger)
      async def button_press9(self, button, interaction):
