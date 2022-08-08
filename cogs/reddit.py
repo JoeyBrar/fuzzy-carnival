@@ -19,7 +19,7 @@ class reddit(commands.Cog):
                                 )   
 
             subreddit = await reddit.subreddit(subred)
-            post = subreddit.top(limit = 100)
+            post = subreddit.hot(limit = 100)
             allPosts = []   
             async for i in post:
                 allPosts.append(i)
