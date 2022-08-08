@@ -65,7 +65,7 @@ def getData(id, currency, days, interval):
     return 1
 
 def plotGraph(color='#00E7FF'):
-  dayss = [1, 7, 14, 30, 90, 180, 365, "max"]
+  dayss = [1, 7, 14, 30, 90, 180, 365, 9999]
   intervall = ["hourly", "hourly", "hourly", "hourly", "daily", "daily", "daily", "daily"]
   for i in range(0, len(dayss)):
     ethInfo = getData('ethereum', 'usd', dayss[i], intervall[i])
@@ -120,9 +120,9 @@ def gembed(days):
     embed = discord.Embed(title = f"Ethereum **{price}, {price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time)", color = 0xcdb0f9)
   else:
     embed = discord.Embed(title = f"Ethereum **{price}, +{price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time)", color = 0xcdb0f9)
-  if days > 2:
+  if days > 2 and days != 9999:
     embed.set_footer(text = f"This graph shows {days} days worth of data \nTimestamp: {timestamp}")
-  elif days == "max":
+  elif days == 9999:
     embed.set_footer(text = f"This graph shows the maximum amount of data \nTimestamp: {timestamp}")
   else:
     embed.set_footer(text = f"This graph shows 1 day of data \nTimestamp: {timestamp}")
@@ -166,7 +166,7 @@ class eth_button(discord.ui.View):
 
      @discord.ui.button(label="All time", style=discord.ButtonStyle.gray)
      async def button_press8(self, button, interaction):
-         await interaction.response.edit_message(embed = gembed("max")[0], file = gembed("max")[1])
+         await interaction.response.edit_message(embed = gembed(9999)[0], file = gembed("max")[1])
 
      @discord.ui.button(label = "Kill embed", style=discord.ButtonStyle.danger)
      async def button_press9(self, button, interaction):
