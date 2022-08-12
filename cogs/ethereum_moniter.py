@@ -12,9 +12,13 @@ import matplotlib.pyplot as plt
 headers = {'User-Agent' : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}
 
 nextday = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 86400
-open_price = 0
-difference = 0
-price_down = False
+now = datetime.date.today()
+stuff1, nextweek, stuff2 = now.isocalendar()
+nextweek = nextweek + 1
+daily_open_price = 0
+weekly_open_price = 0
+daily_difference = 0
+weekly_difference = 0
 
 
 def timeStamp():
@@ -86,40 +90,52 @@ def check():
     return cryptoids 
 
 def price_check():
-  global open_price
-  global difference
-  global price_down
+  global daily_open_price
+  global weekly_open_price
+  global daily_difference
+  global weekly_difference
   global nextday
+  global nextweek
+  now = datetime.date.today()
+  placeholder1, thisweek, placeholder2 = now.isocalendar()
   price, date, dateFormat, timeFormat = getPrices()
   money = float(price[1:].replace(",", ""))
-  if abs(time.time() - nextday) <= 240:
-    open_price = money
-    nextday += 86400
-    difference = money - open_price
-    difference = "${:0,.2f}".format(difference)
-    return difference, False
-  elif open_price == 0:
-    return False, False
+  if thisweek == nextweek:
+    weekly_open_price = money
+    nextweek += 1
+    weekly_difference = money - weekly_open_price
+    weekly_difference = "${:0,.2f}".format(weekly_difference)
+    weekly_difference = "+" + weekly_difference
   else:
-    difference = money - open_price
-    difference = "${:0,.2f}".format(difference)
-    if "-" in difference:
-      difference = difference.replace("$-", "-$")
-      price_down = True
-      return difference, price_down
+    weekly_difference = money - weekly_open_price
+    weekly_difference = "${:0,.2f}".format(weekly_difference)
+    if "-" in weekly_difference:
+      weekly_difference = weekly_difference.replace("$-", "-$")
     else:
-      price_down = False
-      return difference, price_down
+      weekly_difference = "+" + weekly_difference
+
+  if abs(time.time() - nextday) <= 240:
+    daily_open_price = money
+    nextday += 86400
+    daily_difference = money - daily_open_price
+    daily_difference = "${:0,.2f}".format(daily_difference)
+    daily_difference = "+" + daily_difference
+  else:
+    daily_difference = money - daily_open_price
+    daily_difference = "${:0,.2f}".format(daily_difference)
+    if "-" in daily_difference:
+      daily_difference = daily_difference.replace("$-", "-$")
+    else:
+      daily_difference = "+" + daily_difference
+  print(daily_difference)
+  print(weekly_difference)
+  return daily_difference, weekly_difference
 
 def gembed(days):
   price, date, dateFormat, timeFormat = getPrices()
   timestamp = f"Timestamp: {date}"
-  if not price_check()[0]:
-    embed = discord.Embed(title = f"Ethereum **{price}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
-  elif price_check()[1]:
-    embed = discord.Embed(title = f"Ethereum **{price}, {price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
-  else:
-    embed = discord.Embed(title = f"Ethereum **{price}, +{price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time)", color = 0xcdb0f9)
+  daily, weekly = price_check()
+  embed = discord.Embed(title = f"Ethereum **{price}, {daily}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \n**{weekly}** (weekly)\nDailyprice change is compared to the price at 00:00 UTC \nWeekly price change is compared to price on Monday 00:00 UTC", color = 0xcdb0f9)
   if days > 2 and days != 9999:
     embed.set_footer(text = f"This graph shows {days} days worth of data \nTimestamp: {timestamp}")
   elif days == 9999:
@@ -134,7 +150,7 @@ class eth_button(discord.ui.View):
      async def on_timeout(self):
          for child in self.children:
              child.disabled = True
-             plt.close("all")
+         plt.close("all")
          await self.message.edit(view = self)
 
      @discord.ui.button(label = "1 day", style = discord.ButtonStyle.gray)
@@ -195,14 +211,9 @@ class ethereum_moniter(commands.Cog):
 
       try:
         price, date, dateFormat, timeFormat = getPrices()
-            
+        daily, weekly = price_check()
         timestamp = f"Timestamp: {date}"
-        if not price_check()[0]:
-          embed = discord.Embed(title = f"Ethereum **{price}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
-        elif price_check()[1]:
-          embed = discord.Embed(title = f"Ethereum **{price}, {price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
-        else:
-          embed = discord.Embed(title = f"Ethereum **{price}, +{price_check()[0]}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \nPrice change is compared to the price at 00:00 UTC", color = 0xcdb0f9)
+        embed = discord.Embed(title = f"Ethereum **{price}, {daily}**", description = f"as of {dateFormat}, {timeFormat} (US/Eastern Time) \n**{weekly}** (weekly)\nDaily price change is compared to the price at 00:00 UTC \nWeekly price change is compared to price on Monday 00:00 UTC", color = 0xcdb0f9)
         
         if self.count % 3 == 0 or self.count == 0:
             plotGraph()

@@ -73,6 +73,7 @@ async def massDeleteRoleA(ctx):
 
 @client.command()
 async def reload(ctx, extension):
+    await ctx.send("working...")
     client.unload_extension(f'cogs.{extension}')
     client.load_extension(f'cogs.{extension}')
     await ctx.send(f'Reloaded {extension}')
