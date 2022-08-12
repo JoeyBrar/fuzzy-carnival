@@ -127,8 +127,6 @@ def price_check():
       daily_difference = daily_difference.replace("$-", "-$")
     else:
       daily_difference = "+" + daily_difference
-  print(daily_difference)
-  print(weekly_difference)
   return daily_difference, weekly_difference
 
 def gembed(days):
