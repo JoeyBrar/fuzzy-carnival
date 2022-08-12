@@ -25,7 +25,7 @@ async def on_ready():
     print('Bot is online.\n')
     yagChannel = client.get_channel(931685534051479652)
     await yagChannel.send('bot is online')
-    await client.change_presence(activity=discord.Game('Pokermen Advance'))
+    await client.change_presence(activity=discord.Game('GTA 7'))
 
   # useless stuff--------------------------------------------------------------------------
 @client.command()
