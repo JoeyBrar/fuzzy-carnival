@@ -25,7 +25,7 @@ async def on_ready():
     print('Bot is online.\n')
     yagChannel = client.get_channel(931685534051479652)
     await yagChannel.send('i wonder whos it is')
-    await client.change_presence(activity=discord.Game("According to world population studies, approximately 108 billion people have lived on this planet. Assuming that the average lifespan of all these people was 25, there has been around 2.7 trillion years of life, if we multiply this by the number of days in a year (365), there is a total of 985,500,000,000,000 days of life (985.5 trillion days). Not once in any of those days did anybody ask."))
+    await client.change_presence(activity=discord.Game("ur the one who wanted me to check the history, why dont u check it"))
 
   # useless stuff--------------------------------------------------------------------------
 @client.command()
