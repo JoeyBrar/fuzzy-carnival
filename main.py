@@ -24,7 +24,7 @@ async def on_command_error(ctx, error):
 async def on_ready():
     print('Bot is online.\n')
     yagChannel = client.get_channel(931685534051479652)
-    await yagChannel.send('i wonder whos it is')
+    await yagChannel.send('frickity frackity')
     await client.change_presence(activity=discord.Game("gta7"))
 
   # useless stuff--------------------------------------------------------------------------
