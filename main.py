@@ -24,7 +24,7 @@ async def on_command_error(ctx, error):
 async def on_ready():
     print('Bot is online.\n')
     yagChannel = client.get_channel(931685534051479652)
-    await yagChannel.send('frickity frackity')
+    await yagChannel.send(os.environ["joeysdock"])
     await client.change_presence(activity=discord.Game("gta7"))
 
   # useless stuff--------------------------------------------------------------------------
@@ -84,3 +84,4 @@ for filename in os.listdir('./cogs'):
 # --------------------------------------------------------------------------------------
 
 client.run(os.environ["token"])
+client.close()
