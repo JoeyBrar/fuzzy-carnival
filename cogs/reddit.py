@@ -19,7 +19,7 @@ class reddit(commands.Cog):
                                 )   
 
             subreddit = await reddit.subreddit(subred)
-            post = subreddit.hot(limit = 20)
+            post = subreddit.hot(limit = 30)
             allPosts = []   
             async for i in post:
                 allPosts.append(i)
@@ -29,6 +29,7 @@ class reddit(commands.Cog):
             reddit_logo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVEylIZNkjaSRU9xzFO8k5gxsPrgTHwvS0hQ&usqp=CAU"
             meme = discord.Embed(
                 title = f'{randomPost.title}',
+                url = "https://reddit.com" + randomPost.permalink
                 color = discord.Colour.random()
             )
 
@@ -36,7 +37,6 @@ class reddit(commands.Cog):
             meme.set_image(url=f'{randomPost.url}')
             meme.set_thumbnail(url=f'{reddit_logo}')
             meme.set_author(name='a random redditor', icon_url=f'{pfp_url}')
-            meme.add_field(name = 'Link (for comments):', value = f'https://reddit.com' + randomPost.permalink, inline = True)
             meme.add_field(name = 'Subreddit:', value = f'r/{subred}')
 
             await ctx.send(embed=meme)
