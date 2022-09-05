@@ -28,6 +28,7 @@ async def on_ready():
     await client.change_presence(activity=discord.Game("gta7"))
 
   # useless stuff--------------------------------------------------------------------------
+'''
 @client.command()
 async def a(ctx):
   guild = ctx.guild
@@ -66,7 +67,12 @@ async def massDeleteRoleA(ctx):
     elif roles[i].name == 'children':
       await roles[i].delete()
       await ctx.send(f'{roles[i]} deleted')
-  # end of usesless stuff------------------------------------------------------------------------    
+'''
+@client.command()
+async def credits(ctx):
+  await ctx.send("an ikea table#4716: Owner and base code \nYEET#5381: Current maintainer and dev")
+
+# end of usesless stuff------------------------------------------------------------------------    
 
   
 # Cogs ----------------------------------------------------------------------------------

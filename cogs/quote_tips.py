@@ -112,7 +112,7 @@ class daily_quote(commands.Cog):
             
         
 
-    @tasks.loop(seconds = 86400)
+    @tasks.loop(seconds = 300)
     async def daily_quote_tips(self):
         try:
             channel = self.client.get_channel(931685534051479652)
@@ -134,7 +134,8 @@ class daily_quote(commands.Cog):
                 await channel.send(data)
             #s.enterabs(send_time, 1, await send_quote(this_day))
             #await s.run()
-            await send_quote(this_day)
+            if abs(send_time - time.time()) < 299.999999:
+                await send_quote(this_day)
         except Exception as e:
             await channel.send(e)
             print(e)
