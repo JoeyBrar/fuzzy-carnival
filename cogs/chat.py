@@ -32,7 +32,7 @@ class Chat(commands.Cog):
         schoolEnds = datetime.datetime.fromisoformat("2023-06-09 00:00:00:000")
         difference = abs(datetime.datetime.now()-schoolEnds)
         
-        await ctx.send(f'School ends in {difference.days} days. Only {math.trunc(difference.days/7)} weeks and {(difference.days%7)+1} days left!')
+        await ctx.send(f'School ends in {difference.days+1} days. Only {math.trunc(difference.days/7)} weeks and {(difference.days%7)+1} days left!')
 
 def setup(client): 
     client.add_cog(Chat(client))
