@@ -115,7 +115,7 @@ class daily_quote(commands.Cog):
     @tasks.loop(seconds = 300)
     async def daily_quote_tips(self):
         try:
-            channel = self.client.get_channel(931685534051479652)
+            channel = self.client.get_channel(896748385724432415)
             db = self.client.get_channel(1016103072147185697)
             dms = await db.history(limit = 80).flatten()
             this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 247
