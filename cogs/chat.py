@@ -1,5 +1,6 @@
 from discord.ext import commands
-
+import datetime
+import math
 
 class Chat(commands.Cog): 
     def __init__(self, client):
@@ -25,6 +26,13 @@ class Chat(commands.Cog):
         message = input('message > ')
         givenChannel = self.client.get_channel(int(channelID))
         await givenChannel.send(f'{message}')
+        
+    @commands.command(help = '- Freedom')
+    async def freedom(self, ctx):
+        schoolEnds = datetime.datetime.fromisoformat("2023-06-09 00:00:00:000")
+        difference = abs(datetime.datetime.now()-schoolEnds)
+        
+        await ctx.send(f'School ends in {difference.days} days. Only {math.trunc(difference.days/7)} weeks and {difference.days%7} days left!')
 
 def setup(client): 
     client.add_cog(Chat(client))
