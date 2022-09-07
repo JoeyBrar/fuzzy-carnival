@@ -129,12 +129,13 @@ class daily_quote(commands.Cog):
                 quote_num = str(quote_num)
                 data = (f"""__Quote of the day:__ \n**"{quotes[quote_num]['quote']}"**  *- {quotes[quote_num]['author']}* \n \n__Tip/Fact of the day:__ \n**{quotes[quote_num]['tip']}**""")
                 for i in dms:
+                    print(i)
                     person = self.client.get_user(int(i.content))
                     await person.send(data)
                 await channel.send(data)
             #s.enterabs(send_time, 1, await send_quote(this_day))
             #await s.run()
-            if abs(send_time - time.time()) < 299.999999:
+            if abs(send_time - time.time()) < 301:
                 await send_quote(this_day)
         except Exception as e:
             await channel.send(e)
