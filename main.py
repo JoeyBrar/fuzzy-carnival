@@ -70,7 +70,7 @@ async def massDeleteRoleA(ctx):
 '''
 @client.command()
 async def credits(ctx):
-  await ctx.send("an ikea table#4716: Owner and base code \nYEET#5381: Current maintainer and dev")
+  await ctx.send("an ikea table#4716: Co-owner and base code \nYEET#5381: Co-owner, current maintainer and dev")
 
 # end of usesless stuff------------------------------------------------------------------------    
 
