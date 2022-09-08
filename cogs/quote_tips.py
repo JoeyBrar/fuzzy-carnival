@@ -121,15 +121,14 @@ class daily_quote(commands.Cog):
             this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 247
             send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple())
             if datetime.datetime.today().timetuple().tm_hour < 6:
-                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 21600
+                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 36000
             else:
-                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 108000
+                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 122400
 
             async def send_quote(quote_num):
                 quote_num = str(quote_num)
                 data = (f"""__Quote of the day:__ \n**"{quotes[quote_num]['quote']}"**  *- {quotes[quote_num]['author']}* \n \n__Tip/Fact of the day:__ \n**{quotes[quote_num]['tip']}**""")
                 for i in dms:
-                    print(i)
                     person = self.client.get_user(int(i.content))
                     await person.send(data)
                 await channel.send(data)
