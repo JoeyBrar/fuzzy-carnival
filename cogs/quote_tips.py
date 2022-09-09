@@ -68,7 +68,7 @@ quotes = {"1": {"author": "John Doe", "quote": "et molestie ac feugiat sed lectu
 def quote_api():
     try:
         url = https://zenquotes.io/api/today
-        r = requests.get(url = url, headers = headers
+        r = requests.get(url = url, headers = headers)
         data = r.json()
         print(data)
     except Exception as e:
