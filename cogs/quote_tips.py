@@ -65,15 +65,15 @@ quotes = {"1": {"author": "John Doe", "quote": "et molestie ac feugiat sed lectu
             "50": {"author": "Dwight L. Moody", "quote": "Character is what you are in the dark.", "tip": "Say no to plastic bags! Plastic bags stay around a long time after you throw them away. They actually take up to 1,000 years to decompose!"},
             "51": {"author": "Tony Robbins", "quote": "Stay committed to your decisions, but stay flexible in your approach.", "tip": "Harness the power of habit and routine! Set a specific time period for each task you want to accomplish."}
 }
-try:
-    def quote_api():
+def quote_api():
+    try:
         url = https://zenquotes.io/api/today
         r = requests.get(url = url, headers = headers
         data = r.json()
         print(data)
-    quote_api()
-except Exception as e:
-    print(e)
+    except Exception as e:
+        print(e)
+quote_api()
                      
 class daily_quote(commands.Cog):
     def __init__ (self, client):
