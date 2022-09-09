@@ -10,6 +10,7 @@ import sched
 s = sched.scheduler(time.time, time.sleep)
 
 dms = []
+headers = {'User-Agent' : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}
 
 quotes = {"1": {"author": "John Doe", "quote": "et molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra", "tip": "at augue eget arcu dictum varius duis at consectetur lorem donec massa sapien faucibus et"},
     "52": {"author": "Harry Emerson Fosdick", "quote": "One must have the adventurous daring to accept oneself as a bundle of possibilities.", "tip": "If just 25% \of U.S. families used 10 fewer plastic bags a month, we would save over 2.5 billion bags a year."},
@@ -65,6 +66,13 @@ quotes = {"1": {"author": "John Doe", "quote": "et molestie ac feugiat sed lectu
             "51": {"author": "Tony Robbins", "quote": "Stay committed to your decisions, but stay flexible in your approach.", "tip": "Harness the power of habit and routine! Set a specific time period for each task you want to accomplish."}
 }
 
+def quote_api():
+    url = https://zenquotes.io/api/today
+    r = requests.get(url = url, headers = headers
+    data = r.json()
+    print(data)
+quote_api()
+                     
 class daily_quote(commands.Cog):
     def __init__ (self, client):
         self.client = client
@@ -73,7 +81,7 @@ class daily_quote(commands.Cog):
     def cog_unload(self):
         self.daily_quote_tips.cancel()
 
-
+    
 
     @commands.command(help = "toggle whether you want to receive daily quotes and facts in your dms, argument type: Boolean (true/false)")
     async def quote_dm(self, ctx, state):
