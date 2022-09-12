@@ -9,6 +9,8 @@ import sched
 
 s = sched.scheduler(time.time, time.sleep)
 
+sent = False
+today = 0
 dms = []
 headers = {'User-Agent' : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}
 
@@ -67,14 +69,15 @@ quotes = {"1": {"author": "John Doe", "quote": "et molestie ac feugiat sed lectu
 }
 def quote_api():
     try:
-        url = https://zenquotes.io/api/today
+        url = "https://zenquotes.io/api/today"
         r = requests.get(url = url, headers = headers)
         data = r.json()
-        print(data)
+        quote = data[0]['q']
+        author = data[0]['a']
+        return quote, author
     except Exception as e:
         print(e)
-quote_api()
-                     
+
 class daily_quote(commands.Cog):
     def __init__ (self, client):
         self.client = client
@@ -120,15 +123,20 @@ class daily_quote(commands.Cog):
                 await ctx.send(e)
                 print(e)
             
-        
 
     @tasks.loop(seconds = 300)
     async def daily_quote_tips(self):
+        global sent
+        global today
         try:
             channel = self.client.get_channel(896748385724432415)
             db = self.client.get_channel(1016103072147185697)
             dms = await db.history(limit = 80).flatten()
-            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 247
+            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 249
+            if this_day == today:
+                pass
+            else:
+                today += 1
             send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple())
             if datetime.datetime.today().timetuple().tm_hour < 6:
                 send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 36000
@@ -146,6 +154,7 @@ class daily_quote(commands.Cog):
             #await s.run()
             if abs(send_time - time.time()) < 301:
                 await send_quote(this_day)
+                sent = True
         except Exception as e:
             await channel.send(e)
             print(e)

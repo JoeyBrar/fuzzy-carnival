@@ -23,7 +23,6 @@ def get_meme(memenum, subred):
     meme.set_thumbnail(url=f'{reddit_logo}')
     meme.set_author(name='a random redditor', icon_url=f'{pfp_url}')
     meme.add_field(name = 'Subreddit:', value = f'r/{subred}')
-    print(memenum)
     return meme
 
 class meme_scroll(discord.ui.View):
@@ -79,6 +78,7 @@ class reddit(commands.Cog):
             allPosts = []
             async for i in post:
                 allPosts.append(i)
+            reddit.close()
 
             randomPost = random.choice(allPosts)
             pfp_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWp61xAO7c0Yrxss8rPdmbg5EaPwDAR0vJlA&usqp=CAU"
@@ -100,10 +100,6 @@ class reddit(commands.Cog):
         except Exception as e:
             await ctx.send(f'ERROR: ({e}).\nEither you used an invalid subreddit, or one that a normal user wouldn\'t have access to. HOWEVER, If you used a normal subreddit and the problem was on my end, I didn\'t feel like finishing this project and so I wont fix it.')
             print(e)
-
-        
-
-
 
 def setup(client): 
     client.add_cog(reddit(client))
