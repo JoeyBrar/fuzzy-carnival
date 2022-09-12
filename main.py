@@ -24,8 +24,13 @@ async def on_command_error(ctx, error):
 async def on_ready():
     print('Bot is online.\n')
     yagChannel = client.get_channel(931685534051479652)
-    await yagChannel.send("Welcome to your worst nightmare")
+    await yagChannel.send("_post")
+    
     await client.change_presence(activity=discord.Game("gta7"))
+@client.command()
+async def a(ctx):
+  role = get(ctx.message.server.roles, name='3rd In-Command
+  await ctx.message.author.remove_roles(role)
 
   # useless stuff--------------------------------------------------------------------------
 '''
