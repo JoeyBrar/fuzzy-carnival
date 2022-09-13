@@ -132,7 +132,7 @@ class daily_quote(commands.Cog):
             channel = self.client.get_channel(896748385724432415)
             db = self.client.get_channel(1016103072147185697)
             dms = await db.history(limit = 80).flatten()
-            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 249
+            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 250
             if this_day == today:
                 pass
             else:
