@@ -135,10 +135,10 @@ class daily_quote(commands.Cog):
             this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 253
             send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple())
             if datetime.datetime.today().timetuple().tm_hour < 6:
-                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 39600
+                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 21600
                 sent = False
             else:
-                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 108000
+                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 122400
                 sent = False
             async def send_quote(quote_num):
                 quote_num = str(quote_num)
