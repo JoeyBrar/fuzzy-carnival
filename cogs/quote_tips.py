@@ -132,7 +132,7 @@ class daily_quote(commands.Cog):
             channel = self.client.get_channel(896748385724432415)
             db = self.client.get_channel(1016103072147185697)
             dms = await db.history(limit = 80).flatten()
-            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 252
+            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 253
             send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple())
             if datetime.datetime.today().timetuple().tm_hour < 6:
                 send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 39600
@@ -152,6 +152,8 @@ class daily_quote(commands.Cog):
             if abs(send_time - time.time()) < 301 and not sent:
                 await send_quote(this_day)
                 sent = True
+            pain = self.client.get_channel(931685534051479652)
+            await pain.send(abs(send_time - time.time()))
         except Exception as e:
             await channel.send(e)
             await channel.send("exception")
