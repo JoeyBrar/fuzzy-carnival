@@ -19,7 +19,7 @@ quotes = {"1": {"author": "John Doe", "quote": "et molestie ac feugiat sed lectu
             "2": {"author": "Anthony J. D'Angelo", "quote": "Without a sense of caring, there can be no sense of community.",  "tip": "Be assertive, not aggressive."},
             "53": {"author": "E.V. Lucas", "quote": "I'm a believer in punctuality, though it makes me very lonely.",  "tip": "When 13,000 people walking 30 minutes a day were tracked for eight years, a study found their risk for premature death was much lower than those who rarely exercised."},
             "4": {"author": "Alan Simpson", "quote": "If you have integrity, nothing else matters. If you don't have integrity, nothing else matters.",  "tip": "Humans can smell the most minuscule amount of skunk spray, even from a mile away."},
-            "5": {"author": "Jonathan Moyo", "quote": "Loyalty is a 24-hour prposition, 24/7. It's not a part-time job.",  "tip": "Tropical forests fill the world's medicine cabinets: medicine produced in tropical forests grosses $30 billion a year!"},
+            "5": {"author": "Jonathan Moyo", "quote": "Loyalty is a 24-hour proposition, 24/7. It's not a part-time job.",  "tip": "Tropical forests fill the world's medicine cabinets: medicine produced in tropical forests grosses $30 billion a year!"},
             "6": {"author": "Benjamin Franklin", "quote": "The doors of wisdom are never shut.",  "tip": "Life is a product of your decisions, not your conditions. Don't let circumstances define you. Be proactive; use your freedom to make choices."},
             "7": {"author": "Kahlil Gibran", "quote": "Truth is a deep kindness that teaches us to be content in our everyday life and share with the people the same happiness.",  "tip": "Water exercise is one of the best nonimpact fitness activities. It encompasses cardiovascular fitness, muscular strength, endurance, and flexibility, and it can help reduce body fat."},
             "8": {"author": "Isaac Asimov", "quote": "No sensible decision can be made any longer without taking into account not only the world as it is, but the world as it will be.",  "tip": "Think of any number. Multiply that number by 3. Add 45 to the result. Double the result. Divide the answer by 6. Subtract your original number from the answer. The answer will always be 15. Try it!"},
@@ -132,17 +132,14 @@ class daily_quote(commands.Cog):
             channel = self.client.get_channel(896748385724432415)
             db = self.client.get_channel(1016103072147185697)
             dms = await db.history(limit = 80).flatten()
-            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 250
-            if this_day == today:
-                pass
-            else:
-                today += 1
+            this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 252
             send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple())
             if datetime.datetime.today().timetuple().tm_hour < 6:
-                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 36000
+                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 39600
+                sent = False
             else:
-                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 122400
-
+                send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 108000
+                sent = False
             async def send_quote(quote_num):
                 quote_num = str(quote_num)
                 data = (f"""__Quote of the day:__ \n**"{quotes[quote_num]['quote']}"**  *- {quotes[quote_num]['author']}* \n \n__Tip/Fact of the day:__ \n**{quotes[quote_num]['tip']}**""")
@@ -152,11 +149,12 @@ class daily_quote(commands.Cog):
                 await channel.send(data)
             #s.enterabs(send_time, 1, await send_quote(this_day))
             #await s.run()
-            if abs(send_time - time.time()) < 301:
+            if abs(send_time - time.time()) < 301 and not sent:
                 await send_quote(this_day)
                 sent = True
         except Exception as e:
             await channel.send(e)
+            await channel.send("exception")
             print(e)
     
     @daily_quote_tips.before_loop

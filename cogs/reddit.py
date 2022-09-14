@@ -39,14 +39,14 @@ class meme_scroll(discord.ui.View):
          global meme_num
          global subredd
          meme_num -= 1
-         await interaction.response.edit_message(embed = get_meme(meme_num % 40, subredd))
+         await interaction.response.edit_message(embed = get_meme(abs(meme_num % 40), subredd))
 
      @discord.ui.button(label = "⭢", style = discord.ButtonStyle.gray)
      async def button_press2(self, button, interaction):
          global meme_num
          global subredd
          meme_num += 1
-         await interaction.response.edit_message(embed = get_meme(meme_num % 40, subredd))
+         await interaction.response.edit_message(embed = get_meme(abs(meme_num % 40), subredd))
 
      @discord.ui.button(label = "Kill embed", style=discord.ButtonStyle.danger)
      async def button_press9(self, button, interaction):
@@ -78,7 +78,7 @@ class reddit(commands.Cog):
             allPosts = []
             async for i in post:
                 allPosts.append(i)
-            reddit.close()
+            await reddit.close()
 
             randomPost = random.choice(allPosts)
             pfp_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWp61xAO7c0Yrxss8rPdmbg5EaPwDAR0vJlA&usqp=CAU"
