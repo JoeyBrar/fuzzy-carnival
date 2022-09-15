@@ -134,7 +134,7 @@ class daily_quote(commands.Cog):
             dms = await db.history(limit = 80).flatten()
             this_day = datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')), "%d-%m-%Y").timetuple().tm_yday - 253
             send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple())
-            if datetime.datetime.today().timetuple().tm_hour < 6:
+            if datetime.datetime.today().timetuple().tm_hour < 10:
                 send_time = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today().strftime('%d-%m-%Y')),"%d-%m-%Y").timetuple()) + 36000
                 sent = False
             else:
@@ -149,7 +149,7 @@ class daily_quote(commands.Cog):
                 await channel.send(data)
             #s.enterabs(send_time, 1, await send_quote(this_day))
             #await s.run()
-            if abs(send_time - time.time()) < 301 and not sent:
+            if (send_time - time.time()) < 305:
                 await send_quote(this_day)
                 sent = True
             pain = self.client.get_channel(931685534051479652)
