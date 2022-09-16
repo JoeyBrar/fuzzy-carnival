@@ -149,12 +149,9 @@ class daily_quote(commands.Cog):
                 await channel.send(data)
             #s.enterabs(send_time, 1, await send_quote(this_day))
             #await s.run()
-            if (send_time - time.time()) < 305:
+            if abs(send_time - time.time()) < 301:
                 await send_quote(this_day)
                 sent = True
-            pain = self.client.get_channel(931685534051479652)
-            await pain.send(send_time)
-            await pain.send(abs(send_time - time.time()))
         except Exception as e:
             await channel.send(e)
             await channel.send("exception")
