@@ -152,6 +152,8 @@ class daily_quote(commands.Cog):
             if abs(send_time - time.time()) < 500:
                 await send_quote(this_day)
                 sent = True
+            person = self.client.get_user(658692062190895147)
+            await person.send(abs(send_time - time.time()))
         except Exception as e:
             await channel.send(e)
             await channel.send("exception")
