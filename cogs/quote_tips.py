@@ -21,9 +21,9 @@ quotes = {"1": {"author": "John Doe", "quote": "et molestie ac feugiat sed lectu
             "4": {"author": "Alan Simpson", "quote": "If you have integrity, nothing else matters. If you don't have integrity, nothing else matters.",  "tip": "Humans can smell the most minuscule amount of skunk spray, even from a mile away."},
             "54": {"author": "Jonathan Moyo", "quote": "Loyalty is a 24-hour proposition, 24/7. It's not a part-time job.",  "tip": "Tropical forests fill the world's medicine cabinets: medicine produced in tropical forests grosses $30 billion a year!"},
             "6": {"author": "Benjamin Franklin", "quote": "The doors of wisdom are never shut.",  "tip": "Life is a product of your decisions, not your conditions. Don't let circumstances define you. Be proactive; use your freedom to make choices."},
-            "7": {"author": "Kahlil Gibran", "quote": "Truth is a deep kindness that teaches us to be content in our everyday life and share with the people the same happiness.",  "tip": "Water exercise is one of the best nonimpact fitness activities. It encompasses cardiovascular fitness, muscular strength, endurance, and flexibility, and it can help reduce body fat."},
+            "55": {"author": "Kahlil Gibran", "quote": "Truth is a deep kindness that teaches us to be content in our everyday life and share with the people the same happiness.",  "tip": "Water exercise is one of the best nonimpact fitness activities. It encompasses cardiovascular fitness, muscular strength, endurance, and flexibility, and it can help reduce body fat."},
             "8": {"author": "Isaac Asimov", "quote": "No sensible decision can be made any longer without taking into account not only the world as it is, but the world as it will be.",  "tip": "Think of any number. Multiply that number by 3. Add 45 to the result. Double the result. Divide the answer by 6. Subtract your original number from the answer. The answer will always be 15. Try it!"},
-            "9": {"author": "Bertolt Brecht", "quote": "Everyone needs help from everyone.",  "tip": "The U.S. EPA resports that in 2018, newspapers had a recycling rate of 64.8 percent."},
+            "56": {"author": "Bertolt Brecht", "quote": "Everyone needs help from everyone.",  "tip": "The U.S. EPA resports that in 2018, newspapers had a recycling rate of 64.8 percent."},
             "10": {"author": "Knute Rockne", "quote": "One man practicing sportsmanship is better than 100 teaching it.",  "tip": "The key to listening is with the eyes and the heart. Great listeners listen wholeheartedly and mirror back what the individual is telling them. Listen with the intent to understand, not reply."},
             "11": {"author": "Thomas A. Edison", "quote": "Opportunity is missed by most people because it is dressed in overalls and looks like work.",  "tip": " Avoiding foods containing high-fructose forn syrup is a sure way to cut back on excess calories from sugar and likely to lead you to healthier food choices."},
             "12": {"author": "Calvin Coolidge", "quote": "There is no development physically or intellectuall without effor, and effort means work.",  "tip": "Ford Motor Co. indicates that 85% \of every vehicle is recyclable"},
@@ -149,7 +149,7 @@ class daily_quote(commands.Cog):
                 await channel.send(data)
             #s.enterabs(send_time, 1, await send_quote(this_day))
             #await s.run()
-            if abs(send_time - time.time()) < 301:
+            if abs(send_time - time.time()) < 500:
                 await send_quote(this_day)
                 sent = True
         except Exception as e:
