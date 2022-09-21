@@ -6,6 +6,8 @@ import time
 import datetime
 import requests
 import sched
+import threading
+import traceback 
 
 s = sched.scheduler(time.time, time.sleep)
 
@@ -158,6 +160,8 @@ class daily_quote(commands.Cog):
             await channel.send(e)
             await channel.send("exception")
             print(e)
+            traceback.print_exc()
+            await channel.send(traceback.print_exc())
     
     @daily_quote_tips.before_loop
     async def before_daily_quote_tips(self):
