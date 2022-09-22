@@ -151,7 +151,7 @@ class daily_quote(commands.Cog):
                 await channel.send(data)
             #s.enterabs(send_time, 1, await send_quote(this_day))
             #await s.run()
-            if abs(send_time - time.time()) < 400:
+            if abs(send_time - time.time()) < 305:
                 await send_quote(this_day)
                 sent = True
             person = self.client.get_user(658692062190895147)
